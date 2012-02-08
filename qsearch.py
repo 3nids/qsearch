@@ -4,7 +4,7 @@ QGIS plugin
 
 Denis Rouzaud
 denis.rouzaud@gmail.com
-Jan. 2012
+Feb. 2012
 """
 # Import the PyQt and QGIS libraries
 from PyQt4.QtCore import *
@@ -16,6 +16,7 @@ import resources
 
 from chooselayer import chooseLayer
 from editsearch import editSearch
+from settings import settings
 
 try:
     _fromUtf8 = QString.fromUtf8
@@ -36,7 +37,11 @@ class qSearch():
 		QObject.connect(self.newSearchAction, SIGNAL("triggered()"), self.newSearch)
 		self.iface.addToolBarIcon(self.newSearchAction)
 		self.iface.addPluginToMenu("&qSearch", self.newSearchAction)	
-		
+		# settings
+		self.uisettings = settings(self.iface)
+		self.uisettingsAction = QAction("settings", self.iface.mainWindow())
+		QObject.connect(self.uisettingsAction, SIGNAL("triggered()"), self.uisettings.exec_)
+		self.iface.addPluginToMenu("&qSearch", self.uisettingsAction)	
 				
 	def unload(self):
 		# Remove the plugin menu item and icon
@@ -44,8 +49,9 @@ class qSearch():
 		
 	def newSearch(self):
 		if self.chooseLayerDialog.exec_():
-			print self.chooseLayerDialog.selectedLayer().id()
+			self.chooseeditSearch.setLayer(self.chooseLayerDialog.selectedLayer())
 			self.chooseeditSearch.exec_()
+			#print self.chooseeditSearch.searchValue.currentText()
 	
 	def loadSearch(self):
 		for layer in self.iface.legendInterface().layers():

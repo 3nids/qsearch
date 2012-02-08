@@ -4,7 +4,7 @@ QGIS plugin
 
 Denis Rouzaud
 denis.rouzaud@gmail.com
-Jan. 2012
+Feb. 2012
 """
 
 from PyQt4.QtCore import *
@@ -24,7 +24,6 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 		self.iface = iface
 		QDialog.__init__(self)
 		self.setupUi(self)
-		QObject.connect(self.groupCombo , SIGNAL( "currentIndexChanged(int)" ) , self.changeGroup)
 		self.groups = []
 		
 	def showEvent(self, e):
@@ -35,9 +34,7 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 		setLayer = 0
 		curLayerId = ""
 		curLayer = self.iface.mapCanvas().currentLayer()
-		if type(curLayer) != NoneType:
-			curLayerId = curLayer.id()
-		
+		if type(curLayer) != NoneType:	curLayerId = curLayer.id()
 		self.groups = []
 		self.groups.append( layerGroup("ungroupped") )
 		g = 0
@@ -52,16 +49,19 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 				self.groupCombo.addItem(_fromUtf8(""))
 				self.groupCombo.setItemText(g, self.groups[g].name)	
 				add2group = g			
-			for i,layer in enumerate(group[1]):
-				self.groups[g].addLayer(layer)
-				if layer == curLayerId:
-					setGroup = g
-					setLayer = i
+			for layer in group[1]:
+				if self.getLayer(layer).type() == QgsMapLayer.VectorLayer:
+					l = len(self.groups[g].layers)
+					self.groups[g].addLayer(layer)
+					if layer == curLayerId:
+						setGroup = g
+						setLayer = l
 		self.groupCombo.setCurrentIndex(setGroup)
-		self.changeGroup(setGroup)
+		self.on_groupCombo_currentIndexChanged(setGroup)
 		self.layerCombo.setCurrentIndex(setLayer)
 					
-	def changeGroup(self,g):
+	@pyqtSignature("on_groupCombo_currentIndexChanged(int)")
+	def on_groupCombo_currentIndexChanged(self,g):
 		self.layerCombo.clear()
 		for i,layer in enumerate(self.groups[g].layers):	
 			self.layerCombo.addItem(_fromUtf8(""))
