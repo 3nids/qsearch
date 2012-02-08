@@ -1,0 +1,11 @@
+<RCC>
+    <qresource prefix="/plugins/qsearch" >
+        <file>icons/connect.png</file>
+    </qresource>
+    <qresource prefix="/plugins/qsearch" >
+        <file>icons/search.png</file>
+    </qresource>
+    <qresource prefix="/plugins/qsearch" >
+        <file>icons/edit.png</file>
+    </qresource>
+</RCC>
