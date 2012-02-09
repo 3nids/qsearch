@@ -7,6 +7,7 @@ denis.rouzaud@gmail.com
 Feb. 2012
 """
 # Import the PyQt and QGIS libraries
+import PyQt4
 from PyQt4.QtCore import *
 from PyQt4.QtGui import *
 from qgis.core import *
@@ -24,13 +25,16 @@ except AttributeError:
     _fromUtf8 = lambda s: s
 
 class qSearch():
+	triggered = pyqtSignal(QObject)
+	
 	def __init__(self, iface):
-		# Save reference to the QGIS interface
 		self.iface = iface
-		# load searches when new layers are loaded
-		QObject.connect(self.iface.mapCanvas() , SIGNAL("layersChanged ()") , self.loadSearch ) 
+		# init dialogs
 		self.chooseLayerDialog = chooseLayer(self.iface)
-		self.chooseeditSearch  = editSearch(self.iface)
+		self.editSearchDialog  = editSearch(self.iface)
+		# load searches when new layers are loaded or when a search is saved
+		QObject.connect(self.iface.mapCanvas() , SIGNAL("layersChanged ()") , self.fillMenuEntries ) 
+		QObject.connect(self.editSearchDialog  , SIGNAL("searchSaved ()")   , self.fillMenuEntries ) 
 		
 	def initGui(self):
 		self.newSearchAction = QAction(QIcon(":/plugins/qsearch/icons/search.png"),"new search", self.iface.mainWindow())
@@ -46,17 +50,39 @@ class qSearch():
 	def unload(self):
 		# Remove the plugin menu item and icon
 		self.iface.removePluginMenu("&qSearch",self.newSearchAction)
+		self.iface.removePluginMenu("&qSearch", self.uisettingsAction)	
 		
 	def newSearch(self):
 		if self.chooseLayerDialog.exec_():
-			self.chooseeditSearch.setLayer(self.chooseLayerDialog.selectedLayer())
-			self.chooseeditSearch.exec_()
-			#print self.chooseeditSearch.searchValue.currentText()
+			self.editSearchDialog.setLayer(self.chooseLayerDialog.selectedLayer())
+			self.editSearchDialog.exec_()
 	
-	def loadSearch(self):
+	def fillMenuEntries(self):
+		signalMapper = QSignalMapper()
 		for layer in self.iface.legendInterface().layers():
-			i = 0
-			while layer.customProperty("qSearch%u" % i, "").toString() != "":
-				print "load qSearch for layer %s" % layer.name()
-				i += 1
+			searches = layer.customProperty("qSearch","").toString()
+			print searches
+			if searches != "":
+				exec("searches = %s" % searches)
+				for i,search in enumerate(searches):
+					action = QAction("%s :: %s" % (layer.name(),search[0]), self.iface.mainWindow())
+					#QObject.connect(action, SIGNAL("triggered()"), self.showSearch)
+					signalMapper.setMapping(action, qSearchMenuItem(i,layer))
+					action.triggered.connect(signalMapper.map)  
+							
+					#QObject.connect(signalMapper, SIGNAL("mapped(QObject)"), action, SIGNAL("showSearch(qSearchMenuItem)") )
+					self.iface.addPluginToMenu("&qSearch",action)
+		signalMapper.mapped.connect(self.showSearch) 
 		
+	def showSearch(self,item):
+		print "JFDGFDGFDGF"
+		sender = QObject.sender()
+		print sender.layer.name()
+		print sender.isearch
+		
+
+class qSearchMenuItem( QObject ):
+	def __init__(self,layer,isearch):
+		QObject.__init__(self)
+		self.layer = layer
+		self.isearch = isearch

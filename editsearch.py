@@ -35,7 +35,6 @@ class editSearch(QDialog, Ui_editSearch ):
 		for i in range(self.itemsLayout.count()): self.itemsLayout.itemAt(i).widget().close()
 		self.items = []
 
-		
 	def setLayer(self,layer):
 		self.layer = layer
 		self.layerName.setText(layer.name())
@@ -50,7 +49,6 @@ class editSearch(QDialog, Ui_editSearch ):
 				alias = layer.dataProvider().fields().get(i).name()			
 			self.fields.append([i,alias])
 
-	
 	@pyqtSignature("on_addButton_clicked()")
 	def on_addButton_clicked(self):
 		itemIndex = len(self.items)
@@ -80,21 +78,21 @@ class editSearch(QDialog, Ui_editSearch ):
 	def readSearches(self):
 		loadSearches = self.layer.customProperty("qSearch").toString()
 		if loadSearches == '':
-			currentSearches = [[]]
+			currentSearches = []
 		else:
 			exec("currentSearches = %s" % loadSearches)
 		return currentSearches
 			
 	def saveSearches(self):
-		saveSearch = []
+		saveSearch = [[]]
 		for item in self.items:
 			saveSearch.append( [ item.andCombo.currentIndex(),item.fieldCombo.currentIndex(),item.isCombo.currentIndex(),item.operatorCombo.currentIndex(),item.valueCombo.currentText()] )
 		currentSearches = self.readSearches()
 		if self.searchIndex > len(currentSearches)-1: currentSearches.append([])
 		currentSearches[self.searchIndex] = [self.searchName.text(),saveSearch]
 		self.layer.setCustomProperty("qSearch",repr(currentSearches))
-		
-		
+		self.emit(SIGNAL("searchSaved ()"))	
+		#print currentSearches
 		
 class searchItem(QFrame, Ui_searchItem ):
 	def __init__(self,layer,fields,itemIndex):
@@ -107,7 +105,6 @@ class searchItem(QFrame, Ui_searchItem ):
 		if itemIndex > 0: self.andCombo.setEnabled(True)
 		for f in fields: self.fieldCombo.addItem(f[1])		
 
-		
 	@pyqtSignature("on_fieldCombo_currentIndexChanged(int)")
 	def on_fieldCombo_currentIndexChanged(self,i):
 		if i < 0: return
@@ -121,5 +118,3 @@ class searchItem(QFrame, Ui_searchItem ):
 	def on_deleteButton_clicked(self):
 		self.close()
 		self.emit(SIGNAL("itemDeleted(int)",self.itemIndex))
-			
-		
