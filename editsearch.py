@@ -32,11 +32,13 @@ class editSearch(QDialog, Ui_editSearch ):
 		
 
 	def setLayer(self,layer):
+		self.selectButton.setEnabled(False)
 		self.progressBar.setVisible(False)
 		for i in range(self.itemsLayout.count()): self.itemsLayout.itemAt(i).widget().close()
 		
 		self.layer = layer
 		self.layerName.setText(layer.name())
+		self.selection = []
 		self.items = []
 		self.searchIndex = len(self.readSearches())
 		# create list of displayed fields
@@ -93,7 +95,54 @@ class editSearch(QDialog, Ui_editSearch ):
 		self.emit(SIGNAL("searchSaved ()"))	
 		#print currentSearches
 		
-class searchItem(QFrame, Ui_searchItem ):
+	@pyqtSignature("on_searchButton_clicked()")
+	def on_searchButton_clicked(self):
+		# index of fields used for search
+		fields2select = []
+		for item in self.items:
+			fields2select.append( self.fields[item.fieldCombo.currentIndex()][0] )
+		# create search test
+		searchCmd = ""
+		for i,item in enumerate(self.items):
+			if i>0: searchCmd += " %s " % item.andCombo.currentText()
+			searchCmd += " fieldmap[%u] " % fields2select[i]
+			iOper = item.operatorCombo.currentIndex() 
+			if iOper < 3: 
+				searchCmd += " %s %s" % (item.operatorCombo.currentText(), item.valueCombo.currentText() )
+			elif iOper == 3:
+				print "TODO"
+			print searchCmd
+		# select fields, init search
+		provider = self.layer.dataProvider()
+		provider.select(fields2select)
+		self.selection = []
+		f = QgsFeature()
+		# Init progress bar
+		self.selectButton.setText("Select")
+		self.selectButton.setEnabled(False)
+		self.progressBar.setVisible(True)
+		self.progressBar.setMinimum(0)
+		self.progressBar.setMaximum(provider.featureCount())
+		self.progressBar.setValue(0)
+		k = 0
+		# browse features
+		while (provider.nextFeature(f)):
+			k+=1
+			self.progressBar.setValue(k)
+			fieldmap=f.attributeMap()
+			print fieldmap[13].toString() # TODO !!!
+			return
+			if eval(searchCmd):
+				print "ok"
+				self.selection.append(f.id())
+		self.selectButton.setEnabled(False)
+		self.selectButton.setText("Select %u features" % len(self.selection))
+		
+	@pyqtSignature("on_selectButton_clicked()")
+	def on_selectButton_clicked(self):
+		self.layer.setSelectedFeatures(self.selection)
+		
+class searchItem(QFrame, Ui_searchItem):
 	def __init__(self,layer,fields,itemIndex):
 		QFrame.__init__(self)
 		self.setupUi(self)
