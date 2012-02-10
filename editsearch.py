@@ -84,7 +84,7 @@ class editSearch(QDialog, Ui_editSearch ):
 		return currentSearches
 			
 	def saveSearches(self):
-		saveSearch = [[]]
+		saveSearch = []
 		for item in self.items:
 			saveSearch.append( [ item.andCombo.currentIndex(),item.fieldCombo.currentIndex(),item.isCombo.currentIndex(),item.operatorCombo.currentIndex(),item.valueCombo.currentText()] )
 		currentSearches = self.readSearches()

@@ -23,11 +23,10 @@ try:
     _fromUtf8 = QString.fromUtf8
 except AttributeError:
     _fromUtf8 = lambda s: s
-
-class qSearch():
-	triggered = pyqtSignal(QObject)
-	
+		
+class qSearch(QObject):
 	def __init__(self, iface):
+		QObject.__init__(self)
 		self.iface = iface
 		# init dialogs
 		self.chooseLayerDialog = chooseLayer(self.iface)
@@ -56,33 +55,32 @@ class qSearch():
 		if self.chooseLayerDialog.exec_():
 			self.editSearchDialog.setLayer(self.chooseLayerDialog.selectedLayer())
 			self.editSearchDialog.exec_()
-	
+					
 	def fillMenuEntries(self):
-		signalMapper = QSignalMapper()
 		for layer in self.iface.legendInterface().layers():
 			searches = layer.customProperty("qSearch","").toString()
 			print searches
 			if searches != "":
 				exec("searches = %s" % searches)
 				for i,search in enumerate(searches):
-					action = QAction("%s :: %s" % (layer.name(),search[0]), self.iface.mainWindow())
-					#QObject.connect(action, SIGNAL("triggered()"), self.showSearch)
-					signalMapper.setMapping(action, qSearchMenuItem(i,layer))
-					action.triggered.connect(signalMapper.map)  
-							
-					#QObject.connect(signalMapper, SIGNAL("mapped(QObject)"), action, SIGNAL("showSearch(qSearchMenuItem)") )
+					action = searchAction("%s :: %s" % (layer.name(),search[0]), self.iface.mainWindow() , layer, i)		
+					QObject.connect(action, SIGNAL("triggered()"), self.showSearch)	
 					self.iface.addPluginToMenu("&qSearch",action)
-		signalMapper.mapped.connect(self.showSearch) 
-		
-	def showSearch(self,item):
-		print "JFDGFDGFDGF"
-		sender = QObject.sender()
-		print sender.layer.name()
-		print sender.isearch
-		
 
-class qSearchMenuItem( QObject ):
-	def __init__(self,layer,isearch):
-		QObject.__init__(self)
+	
+	def showSearch(self):
+		search = self.sender()
+		self.editSearchDialog.setLayer(search.layer)
+		self.editSearchDialog.loadSearch(search.isearch)
+		self.editSearchDialog.exec_()
+		
+	
+		
+class searchAction(QAction):
+	def __init__(self,str,win,layer,isearch):
+		QAction.__init__(self,str,win)
 		self.layer = layer
 		self.isearch = isearch
+		
+
+
