@@ -30,12 +30,11 @@ class editSearch(QDialog, Ui_editSearch ):
 		self.settings = QSettings("qSearch","qSearch")
 		QObject.connect(self.saveButton , SIGNAL( "clicked()" ) , self.saveSearches)
 		
-	def showEvent(self, e):
-		self.progressBar.setVisible(False)
-		for i in range(self.itemsLayout.count()): self.itemsLayout.itemAt(i).widget().close()
-		self.items = []
 
 	def setLayer(self,layer):
+		self.progressBar.setVisible(False)
+		for i in range(self.itemsLayout.count()): self.itemsLayout.itemAt(i).widget().close()
+		
 		self.layer = layer
 		self.layerName.setText(layer.name())
 		self.items = []
@@ -69,11 +68,11 @@ class editSearch(QDialog, Ui_editSearch ):
 			self.items.append( searchItem(self.layer,self.fields,itemIndex) )
 			QObject.connect(self.items[itemIndex],SIGNAL("itemDeleted(int)"),self.deleteItem)
 			self.itemsLayout.addWidget(self.items[itemIndex])
-			self.items[itemIndex].andCombo.setCurrentText(item[0])
-			self.items[itemIndex].fieldCombo.setCurrentText(item[1])
-			self.items[itemIndex].isCombo.setCurrentText(item[2])
-			self.items[itemIndex].operatorCombo.setCurrentText(item[3])
-			self.items[itemIndex].valueCombo.setCurrentText(item[4])
+			self.items[itemIndex].andCombo.setCurrentIndex(item[0])
+			self.items[itemIndex].fieldCombo.setCurrentIndex(item[1])
+			self.items[itemIndex].isCombo.setCurrentIndex(item[2])
+			self.items[itemIndex].operatorCombo.setCurrentIndex(item[3])
+			self.items[itemIndex].valueCombo.setEditText(item[4])
 		
 	def readSearches(self):
 		loadSearches = self.layer.customProperty("qSearch").toString()
