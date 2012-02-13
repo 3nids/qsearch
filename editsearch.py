@@ -40,6 +40,7 @@ class editSearch(QDialog, Ui_editSearch ):
 		self.items = []
 		self.searchIndex = len(self.readSearches())
 		self.aliasBox.setChecked(self.settings.value("onlyAlias",0).toInt()[0])
+		self.layerLabel.setText("%u feature(s) currently selected in" % layer.selectedFeatureCount())
 
 	def fields(self,aliasMode=-1):
 		# create list of displayed fields
@@ -163,12 +164,18 @@ class editSearch(QDialog, Ui_editSearch ):
 			fieldmap=f.attributeMap()
 			if eval(searchCmd):
 				self.selection.append(f.id())
-		self.selectButton.setEnabled(False)
 		self.selectButton.setText("Select %u features" % len(self.selection))
+		if len(self.selection)>0:
+			self.selectButton.setEnabled(True)
 
 	@pyqtSignature("on_selectButton_clicked()")
 	def on_selectButton_clicked(self):
-		self.layer.setSelectedFeatures(self.selection)
+		selection = []
+		if self.addCurrentBox.isChecked():
+			selection = self.layer.selectedFeaturesIds()
+		selection.extend( self.selection )
+		self.layer.setSelectedFeatures(selection)
+		self.layerLabel.setText("%u feature(s) currently selected in" % self.layer.selectedFeatureCount())
 
 class searchItem(QFrame, Ui_searchItem):
 	def __init__(self,layer,fields,itemIndex):

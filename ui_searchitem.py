@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_searchitem.ui'
 #
-# Created: Mon Feb 13 11:38:46 2012
+# Created: Mon Feb 13 11:57:29 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_searchItem(object):
     def setupUi(self, searchItem):
         searchItem.setObjectName(_fromUtf8("searchItem"))
-        searchItem.resize(567, 33)
+        searchItem.resize(432, 33)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -34,7 +34,12 @@ class Ui_searchItem(object):
         self.gridLayout.setSpacing(3)
         self.gridLayout.setObjectName(_fromUtf8("gridLayout"))
         self.operatorCombo = QtGui.QComboBox(searchItem)
-        self.operatorCombo.setMaximumSize(QtCore.QSize(110, 16777215))
+        sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
+        sizePolicy.setHorizontalStretch(0)
+        sizePolicy.setVerticalStretch(0)
+        sizePolicy.setHeightForWidth(self.operatorCombo.sizePolicy().hasHeightForWidth())
+        self.operatorCombo.setSizePolicy(sizePolicy)
+        self.operatorCombo.setMaximumSize(QtCore.QSize(16777215, 16777215))
         self.operatorCombo.setObjectName(_fromUtf8("operatorCombo"))
         self.operatorCombo.addItem(_fromUtf8(""))
         self.operatorCombo.setItemText(0, QtGui.QApplication.translate("searchItem", "equals", None, QtGui.QApplication.UnicodeUTF8))

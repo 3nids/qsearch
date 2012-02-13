@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_editsearch.ui'
 #
-# Created: Mon Feb 13 08:32:54 2012
+# Created: Mon Feb 13 16:20:16 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -79,10 +79,10 @@ class Ui_editSearch(object):
         self.addCurrentBox.setIconSize(QtCore.QSize(16, 16))
         self.addCurrentBox.setObjectName(_fromUtf8("addCurrentBox"))
         self.gridLayout_2.addWidget(self.addCurrentBox, 2, 3, 1, 2)
-        self.label_3 = QtGui.QLabel(editSearch)
-        self.label_3.setText(QtGui.QApplication.translate("editSearch", "0 feature(s) currently selected in layer", None, QtGui.QApplication.UnicodeUTF8))
-        self.label_3.setObjectName(_fromUtf8("label_3"))
-        self.gridLayout_2.addWidget(self.label_3, 0, 0, 1, 3)
+        self.layerLabel = QtGui.QLabel(editSearch)
+        self.layerLabel.setText(QtGui.QApplication.translate("editSearch", "0 feature(s) currently selected in", None, QtGui.QApplication.UnicodeUTF8))
+        self.layerLabel.setObjectName(_fromUtf8("layerLabel"))
+        self.gridLayout_2.addWidget(self.layerLabel, 0, 0, 1, 3)
         self.searchButton = QtGui.QPushButton(editSearch)
         self.searchButton.setText(QtGui.QApplication.translate("editSearch", "Search", None, QtGui.QApplication.UnicodeUTF8))
         self.searchButton.setObjectName(_fromUtf8("searchButton"))
