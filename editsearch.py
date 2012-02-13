@@ -28,32 +28,33 @@ class editSearch(QDialog, Ui_editSearch ):
 		self.setupUi(self)
 		self.layer = []
 		self.settings = QSettings("qSearch","qSearch")
-		QObject.connect(self.saveButton , SIGNAL( "clicked()" ) , self.saveSearches)
-		
+		QObject.connect(self.saveButton , SIGNAL( "clicked()" ) , self.saveSearches)	
 
 	def setLayer(self,layer):
 		self.selectButton.setEnabled(False)
 		self.progressBar.setVisible(False)
 		for i in range(self.itemsLayout.count()): self.itemsLayout.itemAt(i).widget().close()
-		
 		self.layer = layer
 		self.layerName.setText(layer.name())
 		self.selection = []
 		self.items = []
 		self.searchIndex = len(self.readSearches())
+		
+	def fields(self):
 		# create list of displayed fields
-		self.fields = []
-		for i in layer.dataProvider().fields():
-			alias = layer.attributeAlias(i)
+		fields = []
+		for i in self.layer.dataProvider().fields():
+			alias = self.layer.attributeAlias(i)
 			if alias == "":
 				if self.settings.value("onlyAlias",0).toInt()[0] == 1: continue
-				alias = layer.dataProvider().fields().get(i).name()			
-			self.fields.append([i,alias])
+				alias = self.layer.dataProvider().fields().get(i).name()			
+			fields.append({'index':i,'alias':alias})
+		return fields
 
 	@pyqtSignature("on_addButton_clicked()")
 	def on_addButton_clicked(self):
 		itemIndex = len(self.items)
-		self.items.append( searchItem(self.layer,self.fields,itemIndex) )
+		self.items.append( searchItem(self.layer,self.fields(),itemIndex) )
 		QObject.connect(self.items[itemIndex],SIGNAL("itemDeleted(int)"),self.deleteItem)
 		self.itemsLayout.addWidget(self.items[itemIndex])
 		
@@ -65,16 +66,22 @@ class editSearch(QDialog, Ui_editSearch ):
 		searches = self.readSearches()
 		self.searchIndex = i
 		search = searches[i]
-		searchItems = search[1]
-		for itemIndex,item in enumerate(searchItems):
-			self.items.append( searchItem(self.layer,self.fields,itemIndex) )
+		for itemIndex,item in enumerate(search.get('items')):
+			idx = -1
+			for i,field in enumerate(self.fields()):
+				if field.get('index') == item.get('index'):
+					idx = i
+					break
+			if idx==-1: # i.e. the field apparently does not exist anymore
+				continue
+			self.items.append( searchItem(self.layer,self.fields(),itemIndex) )
 			QObject.connect(self.items[itemIndex],SIGNAL("itemDeleted(int)"),self.deleteItem)
 			self.itemsLayout.addWidget(self.items[itemIndex])
-			self.items[itemIndex].andCombo.setCurrentIndex(item[0])
-			self.items[itemIndex].fieldCombo.setCurrentIndex(item[1])
-			self.items[itemIndex].isCombo.setCurrentIndex(item[2])
-			self.items[itemIndex].operatorCombo.setCurrentIndex(item[3])
-			self.items[itemIndex].valueCombo.setEditText(item[4])
+			self.items[itemIndex].andCombo.setCurrentIndex(item.get('andor'))
+			self.items[itemIndex].fieldCombo.setCurrentIndex(i)
+			self.items[itemIndex].isCombo.setCurrentIndex(item.get('isnot'))
+			self.items[itemIndex].operatorCombo.setCurrentIndex(item.get('operator'))
+			self.items[itemIndex].valueCombo.setEditText(item.get('value'))
 		
 	def readSearches(self):
 		loadSearches = self.layer.customProperty("qSearch").toString()
@@ -87,20 +94,24 @@ class editSearch(QDialog, Ui_editSearch ):
 	def saveSearches(self):
 		saveSearch = []
 		for item in self.items:
-			saveSearch.append( [ item.andCombo.currentIndex(),item.fieldCombo.currentIndex(),item.isCombo.currentIndex(),item.operatorCombo.currentIndex(),item.valueCombo.currentText()] )
+			saveSearch.append( {'andor': item.andCombo.currentIndex(),
+								'index': self.fields()[item.fieldCombo.currentIndex()].get('index') , 
+								'isnot': item.isCombo.currentIndex(),
+								'operator': item.operatorCombo.currentIndex(),
+								'value': item.valueCombo.currentText() } )
 		currentSearches = self.readSearches()
 		if self.searchIndex > len(currentSearches)-1: currentSearches.append([])
-		currentSearches[self.searchIndex] = [self.searchName.text(),saveSearch]
+		currentSearches[self.searchIndex] = {'name': self.searchName.text(), 'alias': int(self.aliasBox.isChecked()) ,'items': saveSearch}
 		self.layer.setCustomProperty("qSearch",repr(currentSearches))
 		self.emit(SIGNAL("searchSaved ()"))	
-		#print currentSearches
+		print currentSearches
 		
 	@pyqtSignature("on_searchButton_clicked()")
 	def on_searchButton_clicked(self):
 		# index of fields used for search
 		fields2select = []
 		for item in self.items:
-			fields2select.append( self.fields[item.fieldCombo.currentIndex()][0] )
+			fields2select.append( self.fields()[item.fieldCombo.currentIndex()][0] )
 		# create search test
 		searchCmd = ""
 		for i,item in enumerate(self.items):
@@ -151,13 +162,13 @@ class searchItem(QFrame, Ui_searchItem):
 		self.itemIndex = itemIndex
 		self.settings = QSettings("qSearch","qSearch")
 		if itemIndex > 0: self.andCombo.setEnabled(True)
-		for f in fields: self.fieldCombo.addItem(f[1])		
+		for f in fields: self.fieldCombo.addItem(f.get('alias'))		
 
 	@pyqtSignature("on_fieldCombo_currentIndexChanged(int)")
 	def on_fieldCombo_currentIndexChanged(self,i):
 		if i < 0: return
 		self.valueCombo.clear()
-		ix = self.fields[i][0]
+		ix = self.fields[i].get('index')
 		maxUnique = self.settings.value("maxUnique",30).toInt()[0]
 		for value in self.layer.dataProvider().uniqueValues(ix,maxUnique):
 			self.valueCombo.addItem(value.toString())					

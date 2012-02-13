@@ -63,7 +63,7 @@ class qSearch(QObject):
 			if searches != "":
 				exec("searches = %s" % searches)
 				for i,search in enumerate(searches):
-					action = searchAction("%s :: %s" % (layer.name(),search[0]), self.iface.mainWindow() , layer, i)		
+					action = searchAction("%s :: %s" % (layer.name(),search.get('name')), self.iface.mainWindow() , layer, i)		
 					QObject.connect(action, SIGNAL("triggered()"), self.showSearch)	
 					self.iface.addPluginToMenu("&qSearch",action)
 
