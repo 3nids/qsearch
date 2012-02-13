@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>540</width>
-    <height>35</height>
+    <width>567</width>
+    <height>33</height>
    </rect>
   </property>
   <property name="sizePolicy">
@@ -37,7 +37,7 @@
    <property name="spacing">
     <number>3</number>
    </property>
-   <item row="1" column="4">
+   <item row="1" column="3">
     <widget class="QComboBox" name="operatorCombo">
      <property name="maximumSize">
       <size>
@@ -47,51 +47,61 @@
      </property>
      <item>
       <property name="text">
-       <string>==</string>
+       <string>equals</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>&lt;</string>
+       <string>is not equal to</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>&gt;</string>
+       <string>is greater than</string>
       </property>
      </item>
      <item>
       <property name="text">
-       <string>text search</string>
+       <string>is strictly greater than</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>is lower than</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>is strictly lower than</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>contains the text</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>does not contain the text</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>the text is</string>
+      </property>
+     </item>
+     <item>
+      <property name="text">
+       <string>the text is not</string>
       </property>
      </item>
     </widget>
    </item>
-   <item row="1" column="5">
+   <item row="1" column="4">
     <widget class="QComboBox" name="valueCombo">
      <property name="editable">
       <bool>true</bool>
      </property>
-    </widget>
-   </item>
-   <item row="1" column="3">
-    <widget class="QComboBox" name="isCombo">
-     <property name="maximumSize">
-      <size>
-       <width>75</width>
-       <height>16777215</height>
-      </size>
-     </property>
-     <item>
-      <property name="text">
-       <string>IS</string>
-      </property>
-     </item>
-     <item>
-      <property name="text">
-       <string>IS NOT</string>
-      </property>
-     </item>
     </widget>
    </item>
    <item row="1" column="2">

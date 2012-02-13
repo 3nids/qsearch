@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_searchitem.ui'
 #
-# Created: Fri Feb 10 14:52:22 2012
+# Created: Mon Feb 13 11:38:46 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_searchItem(object):
     def setupUi(self, searchItem):
         searchItem.setObjectName(_fromUtf8("searchItem"))
-        searchItem.resize(540, 35)
+        searchItem.resize(567, 33)
         sizePolicy = QtGui.QSizePolicy(QtGui.QSizePolicy.Preferred, QtGui.QSizePolicy.Fixed)
         sizePolicy.setHorizontalStretch(0)
         sizePolicy.setVerticalStretch(0)
@@ -37,26 +37,30 @@ class Ui_searchItem(object):
         self.operatorCombo.setMaximumSize(QtCore.QSize(110, 16777215))
         self.operatorCombo.setObjectName(_fromUtf8("operatorCombo"))
         self.operatorCombo.addItem(_fromUtf8(""))
-        self.operatorCombo.setItemText(0, QtGui.QApplication.translate("searchItem", "==", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.setItemText(0, QtGui.QApplication.translate("searchItem", "equals", None, QtGui.QApplication.UnicodeUTF8))
         self.operatorCombo.addItem(_fromUtf8(""))
-        self.operatorCombo.setItemText(1, QtGui.QApplication.translate("searchItem", "<", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.setItemText(1, QtGui.QApplication.translate("searchItem", "is not equal to", None, QtGui.QApplication.UnicodeUTF8))
         self.operatorCombo.addItem(_fromUtf8(""))
-        self.operatorCombo.setItemText(2, QtGui.QApplication.translate("searchItem", ">", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.setItemText(2, QtGui.QApplication.translate("searchItem", "is greater than", None, QtGui.QApplication.UnicodeUTF8))
         self.operatorCombo.addItem(_fromUtf8(""))
-        self.operatorCombo.setItemText(3, QtGui.QApplication.translate("searchItem", "text search", None, QtGui.QApplication.UnicodeUTF8))
-        self.gridLayout.addWidget(self.operatorCombo, 1, 4, 1, 1)
+        self.operatorCombo.setItemText(3, QtGui.QApplication.translate("searchItem", "is strictly greater than", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(4, QtGui.QApplication.translate("searchItem", "is lower than", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(5, QtGui.QApplication.translate("searchItem", "is strictly lower than", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(6, QtGui.QApplication.translate("searchItem", "contains the text", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(7, QtGui.QApplication.translate("searchItem", "does not contain the text", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(8, QtGui.QApplication.translate("searchItem", "the text is", None, QtGui.QApplication.UnicodeUTF8))
+        self.operatorCombo.addItem(_fromUtf8(""))
+        self.operatorCombo.setItemText(9, QtGui.QApplication.translate("searchItem", "the text is not", None, QtGui.QApplication.UnicodeUTF8))
+        self.gridLayout.addWidget(self.operatorCombo, 1, 3, 1, 1)
         self.valueCombo = QtGui.QComboBox(searchItem)
         self.valueCombo.setEditable(True)
         self.valueCombo.setObjectName(_fromUtf8("valueCombo"))
-        self.gridLayout.addWidget(self.valueCombo, 1, 5, 1, 1)
-        self.isCombo = QtGui.QComboBox(searchItem)
-        self.isCombo.setMaximumSize(QtCore.QSize(75, 16777215))
-        self.isCombo.setObjectName(_fromUtf8("isCombo"))
-        self.isCombo.addItem(_fromUtf8(""))
-        self.isCombo.setItemText(0, QtGui.QApplication.translate("searchItem", "IS", None, QtGui.QApplication.UnicodeUTF8))
-        self.isCombo.addItem(_fromUtf8(""))
-        self.isCombo.setItemText(1, QtGui.QApplication.translate("searchItem", "IS NOT", None, QtGui.QApplication.UnicodeUTF8))
-        self.gridLayout.addWidget(self.isCombo, 1, 3, 1, 1)
+        self.gridLayout.addWidget(self.valueCombo, 1, 4, 1, 1)
         self.fieldCombo = QtGui.QComboBox(searchItem)
         self.fieldCombo.setObjectName(_fromUtf8("fieldCombo"))
         self.gridLayout.addWidget(self.fieldCombo, 1, 2, 1, 1)
