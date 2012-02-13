@@ -51,6 +51,8 @@ class qSearch(QObject):
 		# Remove the plugin menu item and icon
 		self.iface.removePluginMenu("&qSearch",self.newSearchAction)
 		self.iface.removePluginMenu("&qSearch", self.uisettingsAction)	
+		for menu in self.menuEntries:
+			self.iface.removePluginMenu("&qSearch", menu)
 
 	def newSearch(self):
 		if self.chooseLayerDialog.exec_():
@@ -60,6 +62,7 @@ class qSearch(QObject):
 	def fillMenuEntries(self):
 		for menu in self.menuEntries:
 			self.iface.removePluginMenu("&qSearch", menu)
+		self.menuEntries = []
 		for layer in self.iface.legendInterface().layers():
 			searches = layer.customProperty("qSearch","").toString()
 			if searches != "":
