@@ -34,6 +34,7 @@ class qSearch(QObject):
 		# load searches when new layers are loaded or when a search is saved
 		QObject.connect(self.iface.mapCanvas() , SIGNAL("layersChanged ()") , self.fillMenuEntries ) 
 		QObject.connect(self.editSearchDialog  , SIGNAL("searchSaved ()")   , self.fillMenuEntries ) 
+		self.menuEntries = []
 
 	def initGui(self):
 		self.newSearchAction = QAction(QIcon(":/plugins/qsearch/icons/search.png"),"new search", self.iface.mainWindow())
@@ -57,16 +58,17 @@ class qSearch(QObject):
 			self.editSearchDialog.exec_()
 
 	def fillMenuEntries(self):
+		for menu in self.menuEntries:
+			self.iface.removePluginMenu("&qSearch", menu)
 		for layer in self.iface.legendInterface().layers():
 			searches = layer.customProperty("qSearch","").toString()
-			print searches
 			if searches != "":
 				exec("searches = %s" % searches)
 				for i,search in enumerate(searches):
 					action = searchAction("%s :: %s" % (layer.name(),search.get('name')), self.iface.mainWindow() , layer, i)
 					QObject.connect(action, SIGNAL("triggered()"), self.showSearch)	
 					self.iface.addPluginToMenu("&qSearch",action)
-
+					self.menuEntries.append( action )
 
 	def showSearch(self):
 		search = self.sender()
@@ -75,10 +77,8 @@ class qSearch(QObject):
 		self.editSearchDialog.exec_()
 
 
-
 class searchAction(QAction):
 	def __init__(self,str,win,layer,isearch):
 		QAction.__init__(self,str,win)
 		self.layer = layer
 		self.isearch = isearch
-
