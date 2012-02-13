@@ -28,8 +28,8 @@ class settings(QDialog, Ui_settings ):
 		# load settings
 		self.settings = QSettings("qSearch","qSearch")
 		
-		self.aliasBox.setChecked( self.settings.value("onlyAlias", 0).toInt()[0] )
-		self.maxUnique.setText(   self.settings.value("maxUnique",30).toString() )
+		self.aliasBox.setChecked( self.settings.value("onlyAlias",  0).toInt()[0] )
+		self.maxUnique.setText(   self.settings.value("maxUnique",100).toString() )
 
 	def applySettings(self):
 		self.settings.setValue( "onlyAlias" , int(self.aliasBox.isChecked()) )
