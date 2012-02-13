@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>553</width>
-    <height>435</height>
+    <width>576</width>
+    <height>349</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -20,31 +20,10 @@
    <property name="spacing">
     <number>6</number>
    </property>
-   <item row="1" column="0">
-    <widget class="QLabel" name="label">
-     <property name="text">
-      <string>Search name</string>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="1" colspan="4">
-    <widget class="QLineEdit" name="searchName">
-     <property name="text">
-      <string>new search</string>
-     </property>
-    </widget>
-   </item>
    <item row="5" column="0" colspan="6">
     <widget class="QProgressBar" name="progressBar">
      <property name="value">
       <number>0</number>
-     </property>
-    </widget>
-   </item>
-   <item row="1" column="5">
-    <widget class="QPushButton" name="saveButton">
-     <property name="text">
-      <string>save</string>
      </property>
     </widget>
    </item>
@@ -75,8 +54,8 @@
        <rect>
         <x>0</x>
         <y>0</y>
-        <width>539</width>
-        <height>230</height>
+        <width>562</width>
+        <height>139</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -97,14 +76,17 @@
      </widget>
     </widget>
    </item>
-   <item row="2" column="0">
-    <widget class="QToolButton" name="addButton">
+   <item row="0" column="0" colspan="3">
+    <widget class="QLabel" name="layerLabel">
      <property name="text">
-      <string>+</string>
+      <string>0 feature(s) currently selected in</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
      </property>
     </widget>
    </item>
-   <item row="2" column="5">
+   <item row="4" column="4" colspan="2">
     <widget class="QPushButton" name="selectButton">
      <property name="enabled">
       <bool>false</bool>
@@ -114,7 +96,7 @@
      </property>
     </widget>
    </item>
-   <item row="2" column="3" colspan="2">
+   <item row="4" column="3">
     <widget class="QCheckBox" name="addCurrentBox">
      <property name="layoutDirection">
       <enum>Qt::LeftToRight</enum>
@@ -130,37 +112,48 @@
      </property>
     </widget>
    </item>
-   <item row="0" column="0" colspan="3">
-    <widget class="QLabel" name="layerLabel">
+   <item row="1" column="5">
+    <widget class="QPushButton" name="saveButton">
      <property name="text">
-      <string>0 feature(s) currently selected in</string>
+      <string>save search</string>
      </property>
     </widget>
    </item>
-   <item row="2" column="1">
-    <widget class="QPushButton" name="searchButton">
-     <property name="text">
-      <string>Search</string>
-     </property>
-    </widget>
-   </item>
-   <item row="2" column="2">
-    <spacer name="horizontalSpacer">
-     <property name="orientation">
-      <enum>Qt::Horizontal</enum>
-     </property>
-     <property name="sizeHint" stdset="0">
-      <size>
-       <width>40</width>
-       <height>20</height>
-      </size>
-     </property>
-    </spacer>
-   </item>
-   <item row="4" column="0" colspan="3">
+   <item row="2" column="3" colspan="3">
     <widget class="QCheckBox" name="aliasBox">
      <property name="text">
       <string>Display only fields with aliases</string>
+     </property>
+    </widget>
+   </item>
+   <item row="2" column="0">
+    <widget class="QPushButton" name="addButton">
+     <property name="text">
+      <string>Add item</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="3" colspan="2">
+    <widget class="QLineEdit" name="searchName">
+     <property name="text">
+      <string>new search</string>
+     </property>
+    </widget>
+   </item>
+   <item row="1" column="1" colspan="2">
+    <widget class="QLabel" name="label">
+     <property name="text">
+      <string>Search name</string>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignRight|Qt::AlignTrailing|Qt::AlignVCenter</set>
+     </property>
+    </widget>
+   </item>
+   <item row="4" column="0">
+    <widget class="QPushButton" name="searchButton">
+     <property name="text">
+      <string>Search</string>
      </property>
     </widget>
    </item>

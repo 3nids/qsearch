@@ -164,6 +164,7 @@ class editSearch(QDialog, Ui_editSearch ):
 			fieldmap=f.attributeMap()
 			if eval(searchCmd):
 				self.selection.append(f.id())
+		self.progressBar.setVisible(False)
 		self.selectButton.setText("Select %u features" % len(self.selection))
 		if len(self.selection)>0:
 			self.selectButton.setEnabled(True)
