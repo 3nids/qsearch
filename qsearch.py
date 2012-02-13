@@ -53,7 +53,7 @@ class qSearch(QObject):
 		
 	def newSearch(self):
 		if self.chooseLayerDialog.exec_():
-			self.editSearchDialog.setLayer(self.chooseLayerDialog.selectedLayer())
+			self.editSearchDialog.initUi(self.chooseLayerDialog.selectedLayer())
 			self.editSearchDialog.exec_()
 					
 	def fillMenuEntries(self):
@@ -70,7 +70,7 @@ class qSearch(QObject):
 	
 	def showSearch(self):
 		search = self.sender()
-		self.editSearchDialog.setLayer(search.layer)
+		self.editSearchDialog.initUi(search.layer)
 		self.editSearchDialog.loadSearch(search.isearch)
 		self.editSearchDialog.exec_()
 		
