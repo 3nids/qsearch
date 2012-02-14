@@ -2,5 +2,9 @@
 qSearch is a QGIS plugin. It produces a friendly interface to perform searches in a layer.
 
 
+Changelog:
+1.0.1: - Fixed bug when removing an item in the search
+
+
 
 

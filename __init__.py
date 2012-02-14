@@ -12,7 +12,7 @@ def name():
 def description():
     return "Nice UI to search within a table and save searches to run them later."
 def version():
-    return "Version 1.0.0"
+    return "Version 1.0.1"
 def icon():
     return "icon.png"
 def qgisMinimumVersion():
