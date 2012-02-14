@@ -139,11 +139,11 @@ class editSearch(QDialog, Ui_editSearch ):
 			operator = operators[item.operatorCombo.currentIndex()]
 			iOper = item.operatorCombo.currentIndex() 
 			if iOper < 6: # => numeric
-				searchCmd += " fieldmap[%u].toDouble()[0] %s %s " % ( fields2select[i] , operator , item.valueCombo.currentText() )
+				searchCmd += " fieldmap[%u].toDouble()[0] %s %s " % ( fields2select[i] , operator , item.valueCombo.currentText().toUtf8() )
 			elif iOper < 8: 
-				searchCmd += " fieldmap[%u].toString().contains(\"%s\") is %s" % ( fields2select[i] , item.valueCombo.currentText(), operator )	
+				searchCmd += " fieldmap[%u].toString().toUtf8().contains(\"%s\") is %s" % ( fields2select[i] , item.valueCombo.currentText().toUtf8(), operator )	
 			elif iOper < 10: 
-				searchCmd += " fieldmap[%u].toString() %s \"%s\" " % ( fields2select[i] , operator , item.valueCombo.currentText() )	
+				searchCmd += " fieldmap[%u].toString().toUtf8() %s \"%s\" " % ( fields2select[i] , operator , item.valueCombo.currentText().toUtf8() )	
 			print searchCmd
 		# select fields, init search
 		provider = self.layer.dataProvider()
@@ -205,4 +205,4 @@ class searchItem(QFrame, Ui_searchItem):
 	@pyqtSignature("on_deleteButton_clicked()")
 	def on_deleteButton_clicked(self):
 		self.close()
-		self.emit(SIGNAL("itemDeleted(int)",self.itemIndex))
+		self.emit(SIGNAL("itemDeleted(int)"),self.itemIndex)
