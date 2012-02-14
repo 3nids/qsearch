@@ -78,7 +78,10 @@ class editSearch(QDialog, Ui_editSearch ):
 
 	def deleteItem(self,itemIndex):
 		self.items.pop(itemIndex)
-		self.items[0].andCombo.setEnabled(False)
+		if len(self.items)>0:
+			self.items[0].andCombo.setEnabled(False)
+		for itemIndex,item in enumerate(self.items):
+			item.itemIndex = itemIndex
 
 	def loadSearch(self,i):
 		self.items = []
