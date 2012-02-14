@@ -130,11 +130,12 @@ class editSearch(QDialog, Ui_editSearch ):
 		fields2select = []
 		for item in self.items:
 			fields2select.append( self.fields()[item.fieldCombo.currentIndex()].get('index'))
+		andor     = ['and','or']
 		operators = ['==','!=','>=','>','<=','<','True','False','==','!=']
 		# create search test
 		searchCmd = ""
 		for i,item in enumerate(self.items):
-			if i>0: searchCmd += " %s " % item.andCombo.currentText()
+			if i>0: searchCmd += " %s " % andor[item.andCombo.currentIndex()]
 			operator = operators[item.operatorCombo.currentIndex()]
 			iOper = item.operatorCombo.currentIndex() 
 			if iOper < 6: # => numeric
