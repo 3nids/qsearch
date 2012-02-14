@@ -158,17 +158,20 @@ class editSearch(QDialog, Ui_editSearch ):
 		self.progressBar.setValue(0)
 		k = 0
 		# browse features
-		while (provider.nextFeature(f)):
-			k+=1
-			self.progressBar.setValue(k)
-			fieldmap=f.attributeMap()
-			if eval(searchCmd):
-				self.selection.append(f.id())
+		try:
+			while (provider.nextFeature(f)):
+				k+=1
+				self.progressBar.setValue(k)
+				fieldmap=f.attributeMap()
+				if eval(searchCmd):
+					self.selection.append(f.id())
+			self.selectButton.setText("Select %u features" % len(self.selection))
+			if len(self.selection)>0:
+				self.selectButton.setEnabled(True)
+		except NameError:
+			QMessageBox.warning( self.iface.mainWindow() , "qSearch","If you are trying to detect text, you should use text equals." )
 		self.progressBar.setVisible(False)
-		self.selectButton.setText("Select %u features" % len(self.selection))
-		if len(self.selection)>0:
-			self.selectButton.setEnabled(True)
-
+			
 	@pyqtSignature("on_selectButton_clicked()")
 	def on_selectButton_clicked(self):
 		selection = []
