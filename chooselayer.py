@@ -30,6 +30,8 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 		self.groupCombo.clear()
 		self.layerCombo.clear()
 		
+		if len(self.iface.legendInterface().layers())==0: return
+		
 		setGroup = 0
 		setLayer = 0
 		curLayerId = ""
@@ -76,6 +78,7 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 	def selectedLayer(self):
 		g = self.groupCombo.currentIndex()	
 		l = self.layerCombo.currentIndex()	
+		if g == -1 or l == -1: return False
 		return self.getLayer(self.groups[g].layers[l])
 	
 class layerGroup():

@@ -56,8 +56,10 @@ class qSearch(QObject):
 
 	def newSearch(self):
 		if self.chooseLayerDialog.exec_():
-			self.editSearchDialog.initUi(self.chooseLayerDialog.selectedLayer())
-			self.editSearchDialog.exec_()
+			layer = self.chooseLayerDialog.selectedLayer()
+			if layer is not False:
+				self.editSearchDialog.initUi(layer)
+				self.editSearchDialog.exec_()
 
 	def fillMenuEntries(self):
 		for menu in self.menuEntries:
