@@ -7,8 +7,8 @@
 
 [general]
 name=qSearch
-description=Nice UI to search within a table and save searches to run them later.
-version=1.0.1
+description=Produces a friendly interface to perform and save searches in a layer.
+version=1.1
 qgisMinimumVersion=1.7
 
 tags=search

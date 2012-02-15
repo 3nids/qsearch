@@ -10,9 +10,9 @@ Jan. 2012
 def name():
     return "qSearch"
 def description():
-    return "Nice UI to search within a table and save searches to run them later."
+    return "This plugin produces a friendly interface to perform and save searches in a layer."
 def version():
-    return "Version 1.0.1"
+    return "Version 1.1"
 def icon():
     return "icon.png"
 def qgisMinimumVersion():
