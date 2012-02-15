@@ -57,12 +57,41 @@ class editSearch(QDialog, Ui_editSearch ):
 			fields.append({'index':i,'alias':alias})
 		return fields
 
-	@pyqtSignature("on_aliasBox_stateChanged(int)")
-	def on_aliasBox_stateChanged(self,i):
-		if i==2: aliasMode = 0
-		else: aliasMode = 1
+	@pyqtSignature("on_aliasBox_clicked()")
+	def on_aliasBox_clicked(self):
+		# new alias mode
+		aliasMode = self.aliasBox.isChecked()
+		# previous alias mode: 0: going from all to only aliases, 1 going from only aliases to all
+		previousAliasMode = int( not aliasMode )
+		# Look for no selection combos and remove them
 		for itemIndex,item in enumerate(self.items):
-			currentField = self.fields(aliasMode)[item.fieldCombo.currentIndex()].get('index')
+			if item.fieldCombo.currentIndex() == -1:
+				item.close()
+				self.deleteItem(itemIndex)
+		# Look for fields with no aliases when going from all to only aliases
+		if aliasMode is True:
+			item2remove = []
+			for itemIndex,item in enumerate(self.items):
+				currentField = self.fields(previousAliasMode)[item.fieldCombo.currentIndex()].get('index')
+				ok = False
+				for i,field in enumerate(self.fields()):
+					if field.get('index') == currentField:
+						ok = True
+						break
+				if ok is False:
+					item2remove.append(itemIndex)
+			if len(item2remove)>0:
+				reply = QMessageBox.question( self , "qSearch" , "Some of the search fields have no aliases, they will be removed. Are you sure to continue?" , QMessageBox.Yes | QMessageBox.No ,QMessageBox.No )
+				if reply != QMessageBox.Yes: 
+					self.aliasBox.setChecked(False)
+					return	
+			# remove items with no corresponding aliases
+			for itemIndex in item2remove:
+				self.items[itemIndex].close()
+				self.deleteItem(itemIndex)
+		# Apply change		
+		for itemIndex,item in enumerate(self.items):
+			currentField = self.fields(previousAliasMode)[item.fieldCombo.currentIndex()].get('index')
 			item.fieldCombo.clear()
 			for i,field in enumerate(self.fields()):
 				item.fieldCombo.addItem(field.get('alias'))	
