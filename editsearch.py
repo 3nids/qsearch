@@ -64,10 +64,12 @@ class editSearch(QDialog, Ui_editSearch ):
 		# previous alias mode: 0: going from all to only aliases, 1 going from only aliases to all
 		previousAliasMode = int( not aliasMode )
 		# Look for no selection combos and remove them
+		item2delete = []
 		for itemIndex,item in enumerate(self.items):
 			if item.fieldCombo.currentIndex() == -1:
 				item.close()
-				self.deleteItem(itemIndex)
+				item2delete.append(itemIndex)
+		self.deleteItem(item2delete)				
 		# Look for fields with no aliases when going from all to only aliases
 		if aliasMode is True:
 			item2remove = []
@@ -86,9 +88,8 @@ class editSearch(QDialog, Ui_editSearch ):
 					self.aliasBox.setChecked(False)
 					return	
 			# remove items with no corresponding aliases
-			for itemIndex in item2remove:
-				self.items[itemIndex].close()
-				self.deleteItem(itemIndex)
+			for itemIndex in item2remove: self.items[itemIndex].close()
+			self.deleteItem(item2remove)
 		# Apply change		
 		for itemIndex,item in enumerate(self.items):
 			currentField = self.fields(previousAliasMode)[item.fieldCombo.currentIndex()].get('index')
@@ -105,8 +106,10 @@ class editSearch(QDialog, Ui_editSearch ):
 		QObject.connect(self.items[itemIndex],SIGNAL("itemDeleted(int)"),self.deleteItem)
 		self.itemsLayout.addWidget(self.items[itemIndex])
 
-	def deleteItem(self,itemIndex):
-		self.items.pop(itemIndex)
+	def deleteItem(self,item2remove):
+		if type(item2remove) == int: item2remove = [item2remove]
+		for offset,itemIndex in enumerate(item2remove): 
+			self.items.pop(itemIndex-offset)
 		if len(self.items)>0:
 			self.items[0].andCombo.setEnabled(False)
 		for itemIndex,item in enumerate(self.items):
