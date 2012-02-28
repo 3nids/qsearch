@@ -3,6 +3,7 @@ qSearch is a QGIS plugin. It produces a friendly interface to perform and save s
 
 
 Changelog:
+1.2:   - Using show instead of exec_ to display the dialog: this allows to interact with Qgis while qSearch dialog is open
 1.1:   - Added confirmation to delete fields with no aliases when switching
        - Fixed bug when switching alias mode
        - Fixed bug when the current project is empty
