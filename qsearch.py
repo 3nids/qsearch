@@ -59,7 +59,7 @@ class qSearch(QObject):
 			layer = self.chooseLayerDialog.selectedLayer()
 			if layer is not False:
 				self.editSearchDialog.initUi(layer)
-				self.editSearchDialog.exec_()
+				self.editSearchDialog.show()
 
 	def fillMenuEntries(self):
 		for menu in self.menuEntries:
@@ -79,7 +79,7 @@ class qSearch(QObject):
 		search = self.sender()
 		self.editSearchDialog.initUi(search.layer)
 		self.editSearchDialog.loadSearch(search.isearch)
-		self.editSearchDialog.exec_()
+		self.editSearchDialog.show()
 
 
 class searchAction(QAction):

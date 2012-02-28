@@ -168,8 +168,8 @@
    <slot>accept()</slot>
    <hints>
     <hint type="sourcelabel">
-     <x>546</x>
-     <y>428</y>
+     <x>569</x>
+     <y>342</y>
     </hint>
     <hint type="destinationlabel">
      <x>390</x>
