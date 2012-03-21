@@ -172,8 +172,8 @@ class editSearch(QDialog, Ui_editSearch ):
 		searchCmd = ""
 		for i,item in enumerate(self.items):
 			if i>0: searchCmd += " %s " % andor[item.andCombo.currentIndex()]
-			operator = operators[item.operatorCombo.currentIndex()]
 			iOper = item.operatorCombo.currentIndex() 
+			operator = operators[iOper]
 			if iOper < 6: # => numeric
 				searchCmd += " fieldmap[%u].toDouble()[0] %s %s " % ( fields2select[i] , operator , item.valueCombo.currentText().toUtf8() )
 			elif iOper < 8: 
