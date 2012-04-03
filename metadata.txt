@@ -8,12 +8,12 @@
 [general]
 name=qSearch
 description=Produces a friendly interface to perform and save searches in a layer.
-version=1.2
+version=1.2.1
 qgisMinimumVersion=1.7
 
 tags=search
-homepage=http://hub.qgis.org/projects/qsearch
-tracker=http://hub.qgis.org/projects/qsearch/issues
+homepage=https://github.com/3nids/qsearch/wiki
+tracker=https://github.com/3nids/qsearch/issues
 repository=https://github.com/3nids/qsearch
 [author]
 name=Denis Rouzaud
