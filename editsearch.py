@@ -177,9 +177,9 @@ class editSearch(QDialog, Ui_editSearch ):
 			if iOper < 6: # => numeric
 				searchCmd += " fieldmap[%u].toDouble()[0] %s %s " % ( fields2select[i] , operator , item.valueCombo.currentText().toUtf8() )
 			elif iOper < 8: 
-				searchCmd += " fieldmap[%u].toString().toUtf8().contains(\"%s\") is %s" % ( fields2select[i] , item.valueCombo.currentText().toUtf8(), operator )	
+				searchCmd += " fieldmap[%u].toString().toUtf8().contains(\"%s\") is %s" % ( fields2select[i] , item.valueCombo.currentText().replace('"', '\\"').toUtf8(), operator )	
 			elif iOper < 10: 
-				searchCmd += " fieldmap[%u].toString().toUtf8() %s \"%s\" " % ( fields2select[i] , operator , item.valueCombo.currentText().toUtf8() )	
+				searchCmd += " fieldmap[%u].toString().toUtf8() %s \"%s\" " % ( fields2select[i] , operator , item.valueCombo.currentText().replace('"', '\\"').toUtf8() )	
 			print searchCmd
 		# select fields, init search
 		provider = self.layer.dataProvider()
