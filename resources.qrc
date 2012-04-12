@@ -1,11 +1,8 @@
 <RCC>
     <qresource prefix="/plugins/qsearch" >
-        <file>icons/connect.png</file>
-    </qresource>
-    <qresource prefix="/plugins/qsearch" >
+        <file>icons/settings.png</file>
         <file>icons/search.png</file>
-    </qresource>
-    <qresource prefix="/plugins/qsearch" >
-        <file>icons/edit.png</file>
+        <file>icons/qsearch2.png</file>
+        <file>icons/help.png</file>
     </qresource>
 </RCC>

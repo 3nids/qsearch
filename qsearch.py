@@ -43,14 +43,19 @@ class qSearch(QObject):
 		self.iface.addPluginToMenu("&qSearch", self.newSearchAction)	
 		# settings
 		self.uisettings = settings(self.iface)
-		self.uisettingsAction = QAction("settings", self.iface.mainWindow())
+		self.uisettingsAction = QAction(QIcon(":/plugins/qsearch/icons/settings.png"), "settings", self.iface.mainWindow())
 		QObject.connect(self.uisettingsAction, SIGNAL("triggered()"), self.uisettings.exec_)
 		self.iface.addPluginToMenu("&qSearch", self.uisettingsAction)	
+		# help
+		self.helpAction = QAction(QIcon(":/plugins/qsearch/icons/help.png"), "Help", self.iface.mainWindow())
+		QObject.connect(self.helpAction, SIGNAL("triggered()"), lambda: QDesktopServices.openUrl(QUrl("https://github.com/3nids/qsearch/wiki")))
+		self.iface.addPluginToMenu("&qSearch", self.helpAction)
 
 	def unload(self):
 		# Remove the plugin menu item and icon
 		self.iface.removePluginMenu("&qSearch",self.newSearchAction)
 		self.iface.removePluginMenu("&qSearch", self.uisettingsAction)	
+		self.iface.removePluginMenu("&qSearch", self.helpAction)	
 		for menu in self.menuEntries:
 			self.iface.removePluginMenu("&qSearch", menu)
 
