@@ -207,6 +207,8 @@ class editSearch(QDialog, Ui_editSearch ):
 				self.selectButton.setEnabled(True)
 		except NameError:
 			QMessageBox.warning( self.iface.mainWindow() , "qSearch","If you are trying to detect text, you should use text equals." )
+		except SyntaxError:
+			QMessageBox.warning( self.iface.mainWindow() , "qSearch","If you are trying to detect text, you should use text equals." )
 		self.progressBar.setVisible(False)
 			
 	@pyqtSignature("on_selectButton_clicked()")
