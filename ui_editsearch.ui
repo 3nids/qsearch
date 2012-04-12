@@ -7,7 +7,7 @@
     <x>0</x>
     <y>0</y>
     <width>576</width>
-    <height>349</height>
+    <height>357</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -55,7 +55,7 @@
         <x>0</x>
         <y>0</y>
         <width>562</width>
-        <height>139</height>
+        <height>147</height>
        </rect>
       </property>
       <layout class="QGridLayout" name="gridLayout_3">
@@ -159,6 +159,18 @@
    </item>
   </layout>
  </widget>
+ <tabstops>
+  <tabstop>searchButton</tabstop>
+  <tabstop>layerName</tabstop>
+  <tabstop>itemsScroll</tabstop>
+  <tabstop>selectButton</tabstop>
+  <tabstop>addCurrentBox</tabstop>
+  <tabstop>saveButton</tabstop>
+  <tabstop>aliasBox</tabstop>
+  <tabstop>addButton</tabstop>
+  <tabstop>searchName</tabstop>
+  <tabstop>closeButton</tabstop>
+ </tabstops>
  <resources/>
  <connections>
   <connection>

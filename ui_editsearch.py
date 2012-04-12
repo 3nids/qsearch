@@ -2,7 +2,7 @@
 
 # Form implementation generated from reading ui file 'ui_editsearch.ui'
 #
-# Created: Mon Feb 13 16:35:26 2012
+# Created: Thu Apr 12 09:36:53 2012
 #      by: PyQt4 UI code generator 4.8.5
 #
 # WARNING! All changes made in this file will be lost!
@@ -17,7 +17,7 @@ except AttributeError:
 class Ui_editSearch(object):
     def setupUi(self, editSearch):
         editSearch.setObjectName(_fromUtf8("editSearch"))
-        editSearch.resize(576, 349)
+        editSearch.resize(576, 357)
         editSearch.setWindowTitle(QtGui.QApplication.translate("editSearch", "qSearch", None, QtGui.QApplication.UnicodeUTF8))
         self.gridLayout_2 = QtGui.QGridLayout(editSearch)
         self.gridLayout_2.setMargin(6)
@@ -40,7 +40,7 @@ class Ui_editSearch(object):
         self.itemsScroll.setAlignment(QtCore.Qt.AlignHCenter|QtCore.Qt.AlignTop)
         self.itemsScroll.setObjectName(_fromUtf8("itemsScroll"))
         self.scrollAreaWidgetContents_2 = QtGui.QWidget()
-        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 562, 139))
+        self.scrollAreaWidgetContents_2.setGeometry(QtCore.QRect(0, 0, 562, 147))
         self.scrollAreaWidgetContents_2.setObjectName(_fromUtf8("scrollAreaWidgetContents_2"))
         self.gridLayout_3 = QtGui.QGridLayout(self.scrollAreaWidgetContents_2)
         self.gridLayout_3.setMargin(3)
@@ -97,6 +97,15 @@ class Ui_editSearch(object):
         self.retranslateUi(editSearch)
         QtCore.QObject.connect(self.closeButton, QtCore.SIGNAL(_fromUtf8("clicked()")), editSearch.accept)
         QtCore.QMetaObject.connectSlotsByName(editSearch)
+        editSearch.setTabOrder(self.searchButton, self.layerName)
+        editSearch.setTabOrder(self.layerName, self.itemsScroll)
+        editSearch.setTabOrder(self.itemsScroll, self.selectButton)
+        editSearch.setTabOrder(self.selectButton, self.addCurrentBox)
+        editSearch.setTabOrder(self.addCurrentBox, self.saveButton)
+        editSearch.setTabOrder(self.saveButton, self.aliasBox)
+        editSearch.setTabOrder(self.aliasBox, self.addButton)
+        editSearch.setTabOrder(self.addButton, self.searchName)
+        editSearch.setTabOrder(self.searchName, self.closeButton)
 
     def retranslateUi(self, editSearch):
         pass
