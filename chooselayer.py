@@ -51,10 +51,11 @@ class chooseLayer(QDialog, Ui_chooseLayer ):
 				self.groupCombo.addItem(_fromUtf8(""))
 				self.groupCombo.setItemText(g, self.groups[g].name)	
 				add2group = g			
-			for layer in group[1]:
-				if self.getLayer(layer).type() == QgsMapLayer.VectorLayer:
+			for layerid in group[1]:
+				layer = self.getLayer(layerid)
+				if layer is not False and layer.type() == QgsMapLayer.VectorLayer:
 					l = len(self.groups[g].layers)
-					self.groups[g].addLayer(layer)
+					self.groups[g].addLayer(layerid)
 					if layer == curLayerId:
 						setGroup = g
 						setLayer = l
