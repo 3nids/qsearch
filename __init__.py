@@ -12,7 +12,7 @@ def name():
 def description():
     return "This plugin produces a friendly interface to perform and save searches in a layer."
 def version():
-    return "Version 1.3.0"
+    return "Version 1.3.1"
 def icon():
     return "icons/qsearch2.png"
 def qgisMinimumVersion():
